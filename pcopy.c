@@ -44,7 +44,7 @@ int main(int argc, char ** argv) {
 
       char *PATH = argv[2*(i_fichiers_traites+1)-1];  // argv[1]
       char *ARGS = argv[2*(i_fichiers_traites+1)];    // argv[2]
-      printf("\t%d : %s %s\n", i_fichiers_traites, PATH, ARGS);
+      // printf("\t%d : %s %s\n", i_fichiers_traites, PATH, ARGS);
 
       int OFFSET, BYTES;
       if (separer_OFFSET_BYTES(ARGS, &OFFSET, &BYTES) != 0) {
@@ -127,7 +127,7 @@ int main(int argc, char ** argv) {
       i_fichiers_traites++;
     }
 
-    printf("%d\n",nb_bytes_copiees_total);
+    // printf("%d\n",nb_bytes_copiees_total);
     return 0;
 }
 
@@ -203,7 +203,7 @@ int file_size(int fd) {
    else { // fichier dans sous-répertoire
      *nom_fichier_out = checker;
    }
-   printf("\tnom: %s\n", *nom_fichier_out);
+   // printf("\tnom: %s\n", *nom_fichier_out);
  }
 
 /* fonction : concatenation(char *s1, char *s2, char *out)
