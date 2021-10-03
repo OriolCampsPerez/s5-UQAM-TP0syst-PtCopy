@@ -106,7 +106,7 @@ int main(int argc, char ** argv) {
           return 1;
         }
 
-        NB_BYTES_COPIEES++; // ¡¡FALTA COMPROBACIÓN DE FIN DE FICHERO!!
+        NB_BYTES_COPIEES++;
         nb_bytes_copiees_total++;
       }
       if (NB_BYTES_COPIEES>file_size(fd_lecture) || NB_BYTES_COPIEES!=file_size(fd_ecriture)) {
@@ -195,8 +195,15 @@ int file_size(int fd) {
    char *checker = strrchr(path,'/');
 
    if (checker == NULL) { // fichier
-     *nom_fichier_out = path;
-     exit(2);
+     int len = strlen(path)+1;
+     char temp[len];
+     temp[0] = '/';
+     int i = 1;
+     while (i<len) {
+       temp[i] = path[i-1];
+       i++;
+     }
+     *nom_fichier_out = temp;
    }
    else { // fichier dans sous-répertoire
      *nom_fichier_out = checker;
