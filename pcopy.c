@@ -185,9 +185,7 @@ int separer_OFFSET_BYTES(char *param, int *OFFSET,int *BYTES) {
  */
 int file_size(int fd) {
     struct stat infos;
-    if (stat(fd, &infos) == -1) {
-      return -1;
-    }
+    fstat(fd, &infos);
     return infos.st_size;
 }
 
