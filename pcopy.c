@@ -126,7 +126,7 @@ int main(int argc, char ** argv) {
       i_fichiers_traites++;
     }
 
-    // printf("%d\n",nb_bytes_copiees_total);
+    printf("%d\n",nb_bytes_copiees_total);
     return 0;
 }
 
