@@ -17,12 +17,12 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-//zone de déclaration des fonctions
+// zone de déclaration des fonctions
 int separer_OFFSET_BYTES(char *param, int *OFFSET,int *BYTES);
 int file_size(int fd);
 void isoler_nom_fichier(char *path, char **nom_fichier_out);
 int concatenation(char *s1, char *s2, char **out);
-//
+// décrites à partir de la ligne 133
 
 int main(int argc, char ** argv) {
 
@@ -130,6 +130,8 @@ int main(int argc, char ** argv) {
     return 0;
 }
 
+// **FONCTIONS**
+
 /* fonction : separer_OFFSET_BYTES(char *param, int *OFFSET,int *BYTES)
  * *param est la chaine de caractères qui correspond à argv[2], c'est-à-dire, "<OFFSET>-<BYTES>"
  * *OFFSET est un pointeur vers un entier où l'on va garder la valeur du offset
@@ -137,13 +139,13 @@ int main(int argc, char ** argv) {
  * But : separer la chaine en deux entiers
  * Sortie : 0 si succès, 1 si erreur
  * Note : le cas où on n'ha pas d'OFFSET (ex. "-5") va être traitré com si le offset soit 0 (ex. "-5" = "0-5")
- *        Pour désactiver cette 'feature', il faudrait enlever les barres de commentaire de l'estructure 'if' en commentaire
+ *        Pour désactiver cette 'feature', il faudrait enlever les barres de commentaire de l'estructure 'if' en commentaire **
  */
 int separer_OFFSET_BYTES(char *param, int *OFFSET,int *BYTES) {
     *OFFSET = 0;
     *BYTES = 0;
     int i = 0;
-    // if (param[i]<'0' || '9'<param[i]) {return 1;} //verifier que c'est une chiffre
+    // if (param[i]<'0' || '9'<param[i]) {return 1;} //verifier que c'est une chiffre, **
     while (param[i] != '-' && param[i] != '\0') { //convertir offset en entier et le garder dans le pointeur *OFFSET
       if (param[i]<'0' || '9'<param[i]) {return 1;} //verifier que c'est une chiffre
       *OFFSET = *OFFSET * 10;
@@ -166,8 +168,10 @@ int separer_OFFSET_BYTES(char *param, int *OFFSET,int *BYTES) {
       i++;
     }
 
-    //Vous pouvez assumer que la taille maximale qui sera
-    //copiée à partir d'un fichier ne dépassera pas 4096 octets.
+    /*
+     * "Vous pouvez assumer que la taille maximale qui sera
+     *  copiée à partir d'un fichier ne dépassera pas 4096 octets."
+     */
     if (*BYTES > 4096) {
       *BYTES = 4096;
     }
@@ -177,11 +181,13 @@ int separer_OFFSET_BYTES(char *param, int *OFFSET,int *BYTES) {
 
 /* fonction : ile_size(int fd)
  * fd est le "file descriptor" du fichier
- * Sortie : le nombre d'octets du fichier
+ * Sortie : le nombre d'octets du fichier, ou -1 si erreur
  */
 int file_size(int fd) {
     struct stat infos;
-    fstat(fd, &infos);
+    if (stat(fd, &infos) == -1) {
+      return -1;
+    }
     return infos.st_size;
 }
 
@@ -194,7 +200,7 @@ int file_size(int fd) {
 
    char *checker = strrchr(path,'/');
 
-   if (checker == NULL) { // fichier
+   if (checker == NULL) { // fichier dans le même répertoire
      int len = strlen(path)+1;
      char temp[len];
      temp[0] = '/';
@@ -235,6 +241,5 @@ int concatenation(char *s1, char *s2, char **out) {
       r[i+len1] = s2[i];
       i++;
     }
-
     return 0;
 }
