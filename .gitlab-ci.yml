@@ -26,6 +26,19 @@ test:
       junit:
         - "*.tap.xml"
 
+test-priv:
+  stage: test_stage
+  allow_failure: true
+  script:
+    - apt-get update && apt install --no-install-recommends -y libtap-formatter-junit-perl bats
+    - make
+    - ./mybats priv.bats
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - "*.tap.xml"
+
 test-local:
   stage: test_stage
   script:
